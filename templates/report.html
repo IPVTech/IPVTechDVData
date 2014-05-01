@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="container">
+          <div class="row">
+              <div class="col-md-12">
+              <ul class="nav navbar-nav">
+                  <li><a href="#">Reported</a></li>
+                  <li><a href="#">Recent Cases</a></li>
+                   <li><a href="#">Notes</a></li>
+                </ul>
+                </div>
+          </div>
+          <div class="row">
+          <div class="col-md-10">
+              <input type="text" class="form-control" id="search"></input></div>
+              <a class="btn btn-primary">Search</a>
+              <a class="btn btn-primary">Report</a>
+          </div>
+        <div class="row report-form">
+            <form role="form">
+                <h2>Report Incident</h2>
+                <div class="form-group">
+                    <label>Incident type</label>
+                    <input type="email" class="form-control" placeholder="eg. Domestic violence">
+                </div> 
+
+            </form>
+        </div>
+    </div>
+   
+{% endblock %}
+

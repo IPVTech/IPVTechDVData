@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block styles %}
+<link href="{{ url_for('static', filename='css/bootstrap-tagsinput.css') }}" rel="stylesheet" media="screen">
+{% endblock %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/bootstrap-tagsinput.min.js') }}"></script>
+{% endblock %}
+{% block body %}
+   <div class="container">
+       <div class="row">
+           <div class="case-detail col-md-7">
+                <h2>{{ case.type }}</h2>
+                <p class="case-content">
+                    {{ case.comments }}
+                </p>
+           </div>
+           <div class="case-metadata col-md-5">
+               <label>Source:</label>
+               <p>{{ case.source }}</p>
+               <label>Incident Type:</label>
+               <p><input type="text" data-role="tagsinput"/></p>
+               <p></p>
+               <label>Device Involved:</label>  
+               <p><input type="text" data-role="tagsinput"/></p>
+           </div>
+       </div>
+   </div>
+{% endblock %}
+

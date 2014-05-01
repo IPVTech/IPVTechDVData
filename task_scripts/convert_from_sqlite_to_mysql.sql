@@ -1,0 +1,1 @@
+insert into policelog2 (report_time, location, content, type, source, incident_no) select concat(str_to_date(report_date, '%m/%d/%Y'), ' ', str_to_date(report_time, '%H:%i')), location, comments, type, source, incident_no from policelog
