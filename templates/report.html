@@ -1,29 +1,61 @@
 {% extends "layout.html" %}
+{% import "macros.html" as macro %}
+{% block styles %}
+<link href="{{ url_for('static', filename='css/bootstrap-tagsinput.css') }}" rel="stylesheet" media="screen">
+<style>
+    .suggested-tags a{
+        color: #999;
+        display: inline-block;
+        margin-right: 10px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/bootstrap-tagsinput.min.js') }}"></script>
+  <script>
+      
+  </script>
+{% endblock %}
 {% block body %}
     <div class="container">
-          <div class="row">
-              <div class="col-md-12">
-              <ul class="nav navbar-nav">
-                  <li><a href="#">Reported</a></li>
-                  <li><a href="#">Recent Cases</a></li>
-                   <li><a href="#">Notes</a></li>
-                </ul>
-                </div>
-          </div>
-          <div class="row">
-          <div class="col-md-10">
-              <input type="text" class="form-control" id="search"></input></div>
-              <a class="btn btn-primary">Search</a>
-              <a class="btn btn-primary">Report</a>
-          </div>
+        {{ macro.search_banner_mini() }}
         <div class="row report-form">
-            <form role="form">
+            <form role="form" action="{{ url_for('insert_incident') }}" method="post">
                 <h2>Report Incident</h2>
                 <div class="form-group">
-                    <label>Incident type</label>
-                    <input type="email" class="form-control" placeholder="eg. Domestic violence">
+                    <label>Title</label>
+                    <input type="text" class="form-control" name="type" placeholder="eg. Domestic violence">
                 </div> 
-
+                <div class="form-group">
+                    <label>Incident type</label>
+                    <input type="text" class="form-control" name="incident_type" placeholder="Press enter after each tag" data-role="tagsinput" id="incident-type">
+                    <div class="suggested-tags">
+                        {% for type in suggested_types %}
+                        <a onclick="$('#incident-type').tagsinput('add', '{{ type }}');">{{ type }}</a>
+                        {% endfor %}
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label>Device Involved</label>
+                    <input type="text" class="form-control" name="device_involved" placeholder="Press enter after each tag" data-role="tagsinput" id="incident-device">
+                    <div class="suggested-tags">
+                        {% for type in suggested_devices %}
+                        <a onclick="$('#incident-device').tagsinput('add', '{{ type }}');">{{ type }}</a>
+                        {% endfor %}
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" class="form-control control-small" name="location" placeholder="eg. Main St., Cambridge">
+                </div> 
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="content" class="form-control" rows="10" ></textarea>
+                </div> 
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>

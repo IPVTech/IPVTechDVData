@@ -1,21 +1,84 @@
 {% extends "layout.html" %}
+{% import "macros.html" as macro %}
+
+{% block styles %}
+<link href="{{ url_for('static', filename='css/bootstrap-tagsinput.css') }}" rel="stylesheet" media="screen">
+<link href="{{ url_for('static', filename='css/nv.d3.min.css') }}" rel="stylesheet" media="screen">
+<style>
+    #graph-region svg {
+      height: 300px;
+    }
+</style>
+{% endblock %}
+{% block scripts %}
+  {% if page==1 %}
+  <script src="{{ url_for('static', filename='js/d3.v3.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/nv.d3.min.js') }}"></script>
+  <script>
+      $.get("{{ url_for('search_data') }}?keyword={{ keyword }}",function(result){
+                var data = result.data
+                nv.addGraph(function() {
+                    var chart = nv.models.linePlusBarChart()
+                      .margin({top: 30, right: 60, bottom: 50, left: 70})
+                      .x(function(d,i) { return i })
+                      .y(function(d) { return d[1] })
+                      .color(d3.scale.category10().range())
+                      ;
+
+                    chart.xAxis
+                      .showMaxMin(false)
+                      .tickFormat(function(d) {
+                        var dx = data[0].values[d] && data[0].values[d][0] || 0;
+                        return d3.time.format('%m/%Y')(new Date(dx))
+                      });
+
+                    chart.y1Axis
+                      .tickFormat(d3.format(',f'));
+
+                    chart.y2Axis
+                      .tickFormat(d3.format('.2p'));
+
+                    chart.bars.forceY([0]);
+
+                    d3.select('#graph-region svg')
+                      .datum(data)
+                      .transition().duration(500)
+                      .call(chart)
+                      ;
+
+                    nv.utils.windowResize(chart.update);
+
+                    return chart;
+                });
+
+            });
+  </script>
+  {% endif %}
+{% endblock %}
+
 {% block body %}
-    <div class="jumbotron">
-        <div class="container">
-             <h1>IPVTech Research Portal</h1>
-          <div class="row">
-          <ul class="nav navbar-nav">
-              <li><a href="#">Reported</a></li>
-              <li><a href="#">Recent Cases</a></li>
-               <li><a href="#">Notes</a></li>
+    {{ macro.search_banner_mini() }}
+    
+    <div class="row">
+        {% if page==1 %}
+        <div id="graph-region" class="col-md-7">
+            <label>Statistics</label>
+            <svg></svg>
+        </div>
+        {% endif %}
+        <div id="source-filter" class="col-md-2">
+            <label>Sources</label>
+            <ul>
+                {% for name in source_count_map %}
+                <li>{{ name }} ({{ source_count_map[name] }})</li>
+                {% endfor %}
             </ul>
-          </div>
-          <div class="col-sm-10">
-          <input type="text" class="form-control" id="search"></input></div>
-          <a class="btn btn-primary">Search</a>
-          <a class="btn btn-primary">Report</a>
+        </div>
+        <div id="source-filter" class="col-md-3">
+            <label>Tags</label>
         </div>
     </div>
+    
     {{ pagination.links|safe }}
     <table class="table">
         <tr>
@@ -31,11 +94,11 @@
             <td>{{ record.incident_no }}</td>
             <td><a href="{{ url_for('view_case', case_id=record.id ) }}" target="_blank">{{ record.type }}</a></td>
             <td>{{ record.location }}</td>
-            <td>{{ record.report_date }}{{ record.report_time }}</td>
+            <td>{{ record.report_time }}</td>
         </tr>
         <tr class="other-line">
             <td colspan="6">
-                <p>{{ record.comments }}</p>
+                <p>{{ record.content }}</p>
             </td>
         </tr>
         
