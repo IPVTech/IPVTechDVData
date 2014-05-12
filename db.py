@@ -16,6 +16,14 @@ class PoliceLog(MySQLModel):
 	type = CharField()
 	source = CharField()
 	incident_no = CharField()
+    
+class Decision(MySQLModel):
+    year = CharField(default='')
+    month = CharField(default='')
+    content = CharField()
+    place = CharField(default='')
+    title = CharField()
+    source = CharField(default='')
 
 class Tag(MySQLModel):
     name = CharField()
@@ -23,6 +31,12 @@ class Tag(MySQLModel):
     
 class PoliceLogTag(MySQLModel):
     policeLog = ForeignKeyField(PoliceLog)
+    tag = ForeignKeyField(Tag)
+    policeLog_id = IntegerField()
+
+class DecisionTag(MySQLModel):
+    decision_id = IntegerField()
+    decision = ForeignKeyField(Decision)
     tag = ForeignKeyField(Tag)
     
 class User(MySQLModel):

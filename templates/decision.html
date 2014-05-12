@@ -1,17 +1,21 @@
 {% extends "layout.html" %}
 {% block styles %}
 <link href="{{ url_for('static', filename='css/bootstrap-tagsinput.css') }}" rel="stylesheet" media="screen">
+<style>
+tags-saved{
+    color: #68c168;
+}
+</style>
 {% endblock %}
 {% block scripts %}
   <script src="{{ url_for('static', filename='js/bootstrap-tagsinput.min.js') }}"></script>
-  
-    <script>
+  <script>
       $('#incident-type-input, #device-input').change(function(){
         $('.tags-saved').hide();
         $('.update-button').show();
       });
       $('.update-button').click(function(){
-        $.get('{{ url_for("save_tags") }}', {
+        $.get('{{ url_for("save_decision_tags") }}', {
             'id': {{ case.id }},
             'type_tags': $('#incident-type-input').val(),
             'device_tags' : $('#device-input').val()
@@ -29,9 +33,9 @@
    <div class="container">
        <div class="row">
            <div class="case-detail col-md-7">
-                <h2>{{ case.type }}</h2>
+                <h2>{{ case.title }}</h2>
                 <p class="case-content">
-                    {{ case.content }}
+                    {{ case.content|safe }}
                 </p>
            </div>
            <div class="case-metadata col-md-5">

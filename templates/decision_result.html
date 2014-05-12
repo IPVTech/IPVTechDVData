@@ -15,7 +15,7 @@
   <script src="{{ url_for('static', filename='js/d3.v3.js') }}"></script>
   <script src="{{ url_for('static', filename='js/nv.d3.min.js') }}"></script>
   <script>
-      $.get("{{ url_for('search_data') }}?keyword={{ keyword }}",function(result){
+      $.get("{{ url_for('decision_data') }}?keyword={{ keyword }}",function(result){
                 var data = result.data
                 nv.addGraph(function() {
                     var chart = nv.models.linePlusBarChart()
@@ -70,17 +70,15 @@
             <label>Sources</label>
             <ul>
                 {% for name in source_count_map %}
-                <li><a href="{{ url_for('search', source=name, tag=request.args['tag'], keyword=keyword) }}">{{ name }} ({{ source_count_map[name] }})</a></li>
+                <li><a href="{{ url_for('decisions', source=name, tag=request.args['tag'], keyword=keyword) }}">{{ name }} ({{ source_count_map[name] }})</a></li>
                 {% endfor %}
             </ul>
         </div>
         <div id="source-filter" class="col-md-3">
             <label>Tags</label>
-            <ul>
-                {% for tag in tags %}
-                <li><a href="{{ url_for('search', source=request.args['source'], tag=tag.name, keyword=keyword) }}">{{ tag.name }} ({{ tag.cnt }})</li>
-                {% endfor %}
-            </ul>
+            {% for tag in tags %}
+            <li><a href="{{ url_for('decisions', source=request.args['source'], tag=tag.name, keyword=keyword) }}">{{ tag.name }} ({{ tag.cnt }})</li>
+            {% endfor %}
         </div>
     </div>
     
@@ -88,21 +86,18 @@
     <table class="table">
         <tr>
             <th>Source</th>
-            <th>Incident No.</th>
-            <th>Title/Type</th>
-            <th>Location</th>
-            <th>Report Time</th>
+            <th>Title</th>
+            <th>Year</th>
         </tr>
         {% for record in records %}
         <tr>
             <td>{{ record.source }}</td>
-            <td>{{ record.incident_no }}</td>
-            <td><a href="{{ url_for('view_case', case_id=record.id ) }}" target="_blank">{{ record.type }}</a></td>
-            <td>{{ record.location }}</td>
-            <td>{{ record.report_time }}</td>
+            <td><a href="{{ url_for('decision', case_id=record.id ) }}" target="_blank">{{ record.title }}</td>
+            <td>{{ record.year }}</td>
         </tr>
         <tr class="other-line">
-            <td colspan="6">
+            <td></td>
+            <td colspan="2">
                 <p>{{ record.content | striptags | truncate(120)}}</p>
             </td>
         </tr>

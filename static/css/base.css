@@ -81,3 +81,9 @@ label {
 .control-small{
     width: 200px;
 }
+
+
+ul.navbar-nav li.active a{
+    color: #333;
+    text-decoration: underline;
+}

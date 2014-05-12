@@ -23,18 +23,15 @@
     
 {% endmacro %}
 
-{% macro search_banner_mini(): %}
+{% macro search_banner_mini(module_name='police_log'): %}
 <div class="row">
     <div class="col-md-12">
         <ul class="nav navbar-nav">
-            <li>
-                <a href="#">Reported</a>
+            <li  {% if request.path == "/search" %}class="active"{% endif %}>
+                <a href="{{ url_for('search') }}?keyword={{ request.args.keyword }}">Police Logs</a>
             </li>
-            <li>
-                <a href="#">Recent Cases</a>
-            </li>
-            <li>
-                <a href="#">Notes</a>
+            <li  {% if request.path == "/decisions" %}class="active"{% endif %}>
+                <a href="{{ url_for('decisions') }}?keyword={{ request.args.keyword }}">Court Decisions</a>
             </li>
         </ul>
     </div>
@@ -42,7 +39,7 @@
 <div class="row">
     <form action="{{ url_for('search') }}" method="get">
         <div class="col-md-10">
-            <input type="text" class="form-control" id="search" name="keyword"></input>
+            <input type="text" class="form-control" id="search" name="keyword" value="{{ request.args.keyword }}"></input>
         </div>
         <input class="btn btn-primary" type="submit" value="Search"/>
         <a class="btn btn-primary" href="{{ url_for('new_incident') }}">Report</a>
