@@ -17,11 +17,10 @@
     <div class="blog-masthead">
       <div class="container">
         <nav class="blog-nav">
-          <a class="blog-nav-item" href="#">IPVTech Research Portal</a>
-          <a class="blog-nav-item active" href="#">Home</a>
-          <a class="blog-nav-item" href="#">What's this?</a>
-          <a class="blog-nav-item" href="#">More Resources</a>
-          <a class="blog-nav-item" href="#">About</a>
+          <a class="blog-nav-item" href="{{ url_for('index') }}">IPVTech Research Portal</a>
+          <a class="blog-nav-item active" href="{{ url_for('index') }}">Home</a>
+          <a class="blog-nav-item" href="{{ url_for('whats_this') }}">What's this?</a>
+          <a class="blog-nav-item" href="https://wiki.ipvtech.is/">More Resources</a>
 
             <a class="blog-nav-item" href="#">Log In</a>
 

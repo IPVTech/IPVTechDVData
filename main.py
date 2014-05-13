@@ -340,7 +340,10 @@ def save_tags():
             dt.tag = item
             dt.save()        
     return "ok"
-    
+  
+@app.route("/whats_this")
+def whats_this():
+    return render_template('whats_this.html') 
 
 if __name__ == "__main__":
     

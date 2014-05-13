@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% import "macros.html" as macro %}
+{% block styles %}
+
+{% endblock %}
+{% block scripts %}
+
+{% endblock %}
+{% block body %}
+    <div class="container">
+        
+        {{ macro.search_banner_mini() }}
+        <h2>the process of domestic surveillance</h2>
+        <img src="{{ url_for('static', filename='img/infographic.png') }}"/>
+    </div>
+   
+{% endblock %}
+

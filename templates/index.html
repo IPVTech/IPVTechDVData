@@ -1,24 +1,23 @@
 {% extends "layout.html" %}
 {% block body %}
-    <div class="jumbotron">
-        <div class="container">
-             <h1>IPVTech Research Portal</h1>
-          <div class="row">
-          <ul class="nav navbar-nav">
-              <li><a href="#">Reported</a></li>
-              <li><a href="#">Recent Cases</a></li>
-               <li><a href="#">Notes</a></li>
-            </ul>
-          </div>
-          <div class="col-sm-10">
-          <form action="{{ url_for('search') }}" method="get">
-              <input type="text" class="form-control" id="search" name="keyword"/>
-          </form>
-          </div>
-          <a class="btn btn-primary">Search</a>
-          <a class="btn btn-primary">Report</a>
-        </div>
+<div class="jumbotron">
+    <div class="container">
+         <h1>IPVTech Research Portal</h1>
+      <div class="row">
+      <ul class="nav navbar-nav">
+          <li><a href="#">Reported</a></li>
+          <li><a href="#">Recent Cases</a></li>
+           <li><a href="#">Notes</a></li>
+        </ul>
+      </div>
+      <form action="{{ url_for('search') }}" method="get">
+      <div class="col-sm-10">
+          <input type="text" class="form-control" id="search" name="keyword"/>
+      </div>
+      <input class="btn btn-primary" type="submit" value="Search"/>
+      <a class="btn btn-primary" href="{{ url_for('new_incident') }}">Report</a>
+      </form>
     </div>
-   
+</div>
 {% endblock %}
 

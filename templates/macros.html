@@ -37,7 +37,12 @@
     </div>
 </div>
 <div class="row">
+    {% if request.path == "/search" %}
     <form action="{{ url_for('search') }}" method="get">
+    {% endif %}
+    {% if request.path == "/decisions" %}
+    <form action="{{ url_for('decisions') }}" method="get">
+    {% endif %}
         <div class="col-md-10">
             <input type="text" class="form-control" id="search" name="keyword" value="{{ request.args.keyword }}"></input>
         </div>
